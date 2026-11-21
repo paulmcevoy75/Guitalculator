@@ -1,0 +1,20 @@
+name: Idea or request
+description: A calculation, switch, pickup or feature you'd like the app to have
+labels: ["idea"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like it to do?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Where would it help in your build?
+      description: The job you're trying to do, and how you do it now.
+  - type: textarea
+    id: sources
+    attributes:
+      label: Any sources?
+      description: Books, makers' datasheets or diagrams, or links that show how it should work.
