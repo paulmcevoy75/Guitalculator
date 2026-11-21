@@ -11,8 +11,7 @@ Currently it's an HTML program that I started a while ago, but it may be that HT
 1. **Nut and saddle compensation** for all manner of fretted instruments, with several formulas for nut compensation.
 2. **String spacing** for all manner of instruments.
 3. **A unit converter** for measurements. It's also a place where you can store measurements you use often.
-4. **An IR calculator.** I'm working on a new IR calculator that isn't HTML-based, so this one will probably go at some point.
-5. **Wired!: a guitar wiring designer.**
+4. **Wired!: a guitar wiring designer.**
    - You lay out pickups, switches, pots and the output jack, and wire what each switch position should do.
    - The app works out which lug every wire goes on and checks every switch setting.
    - It draws a lug-to-lug wiring diagram in the pickups' real lead colours, a build sheet, and a tone graph for each setting.
