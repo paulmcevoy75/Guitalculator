@@ -13046,10 +13046,10 @@ var WiringEngine = (function(){
       outIds.forEach(function(o){ c.chainAll[o] = ca; });
       attempt(c, 0);
     });
-    // Keep looking past the time budget (up to 2.5x) while nothing works yet and fewer than 40 tries
+    // Keep looking past the time budget (up to 8x) while nothing works yet and fewer than 40 tries
     // have run: the tries are seeded, so a design that solves on try 20 then always solves, instead
     // of depending on how busy the computer is.
-    while((now()-t0 < budget || (best.fails.length && tries < 40 && now()-t0 < budget*2.5)) && tries < 3000){
+    while((now()-t0 < budget || (best.fails.length && tries < 40 && now()-t0 < budget*8)) && tries < 3000){
       if(!best.fails.length){ if(++sinceOk > extra) break; }
       attempt(randomChoice(), rng() < 0.3 ? 0 : 0.2 + rng()*0.8);
     }
@@ -14224,10 +14224,15 @@ var WiringEngine = (function(){
       });
       if(kind==='control' && sw.onPot===id) sw.onPot = '';
     });
-    if(kind==='pickup') design.controls = design.controls.filter(function(c){
-      if(c.scope && c.scope.kind==='pickup'){ c.scope.pickups = (c.scope.pickups||[]).filter(function(x){ return x!==id; }); return c.scope.pickups.length>0 || c.kind==='tone'; }
-      return true;
-    });
+    // a pickup's own volume or tone goes with it (a tone left with no pickup only showed an error)
+    if(kind==='pickup'){
+      var gone = [];
+      design.controls = design.controls.filter(function(c){
+        if(c.scope && c.scope.kind==='pickup'){ c.scope.pickups = (c.scope.pickups||[]).filter(function(x){ return x!==id; }); if(!c.scope.pickups.length){ gone.push(c.id); return false; } }
+        return true;
+      });
+      gone.forEach(function(cid){ removeRefs('control', cid); });
+    }
     if(kind==='output'){
       design.pickups.forEach(function(p){ if(p.out===id) delete p.out; });
       design.controls.forEach(function(c){ if(c.scope && c.scope.output===id) c.scope.output = 'A'; });
